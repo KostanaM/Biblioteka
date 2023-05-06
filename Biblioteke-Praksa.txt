@@ -1,0 +1,120 @@
+CREATE TABLE `biblioteka` (
+  `biblioteka_id` int primary key NOT NULL AUTO_INCREMENT,
+  `naziv` varchar(55) NOT NULL,
+  `ulica` varchar(55),
+  `broj` int(10),
+  `mesto` varchar(55),
+  `telefon` int(10)
+) ENGINE = InnoDB;
+
+CREATE TABLE `clanovi` (
+  `clan_id` int  primary key NOT NULL AUTO_INCREMENT,
+  `ime` varchar(55) NOT NULL,
+  `prezime` varchar(55) NOT NULL,
+  `datumRodjenja` DATE,
+  `telefon` int(10),
+  `ulica` varchar(55),
+  `broj` int(10),
+  `mesto` varchar(55),
+  `brojClanske` int(10)
+) ENGINE = InnoDB;
+
+CREATE TABLE `bibliotekaClan` (
+  ` bibliotekaClan _id` int  primary key NOT NULL AUTO_INCREMENT,
+  `biblioteka_id` int,
+  `clan_id` int,
+   FOREIGN KEY(clan_id) REFERENCES clanovi(`clan_id`) 
+   ON UPDATE CASCADE ON DELETE NO ACTION,
+   FOREIGN KEY(biblioteka_id) REFERENCES biblioteka(biblioteka_id) 
+   ON UPDATE CASCADE ON DELETE NO ACTION
+) ENGINE = InnoDB;
+
+CREATE TABLE `bibliotekar` (
+  `bibliotekar_id` int  primary key NOT NULL AUTO_INCREMENT,
+  `ime` varchar(55) NOT NULL,
+  `prezime` varchar(55) NOT NULL,
+  `sifra` varchar(55) NOT NULL,
+   `ulica` varchar(55),
+  `broj` int(10),
+  `mesto` varchar(55),
+  `JBMG` int,
+  `telefon` int(10) DEFAULT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE `bibliotekaBibliotekar` (
+  ` bibliotekaBibliotekar _id` int  primary key NOT NULL AUTO_INCREMENT,
+  `biblioteka_id` int,
+`bibliotekar_id`  int,
+   FOREIGN KEY(`bibliotekar_id` ) REFERENCES bibliotekar (`bibliotekar_id`) 
+   ON UPDATE CASCADE ON DELETE NO ACTION,
+   FOREIGN KEY(biblioteka_id) REFERENCES biblioteka(biblioteka_id) 
+   ON UPDATE CASCADE ON DELETE NO ACTION
+) ENGINE = InnoDB;
+
+CREATE TABLE knjige(
+  knjiga_id int primary key NOT NULL AUTO_INCREMENT,
+  naziv varchar(45),
+  jezik varchar(45),
+  izdavac varchar(45),
+  `biblioteka_id` int,
+  FOREIGN KEY(biblioteka_id) REFERENCES biblioteka(biblioteka_id) 
+  ON UPDATE CASCADE ON DELETE NO ACTION
+) ENGINE = INNODB;
+
+CREATE TABLE autori(
+  autorID int primary key NOT NULL AUTO_INCREMENT,
+  imeAutora varchar(45),
+  prezimeAutora varchar(45) 
+) ENGINE = INNODB;
+
+CREATE TABLE knjigaAutori(
+  knjigaAutoriID int primary key NOT NULL AUTO_INCREMENT,
+  knjiga_id int,
+  autorID int,
+  FOREIGN KEY (knjiga_id) REFERENCES knjige(knjiga_id)
+  ON UPDATE CASCADE ON DELETE NO ACTION,
+  FOREIGN KEY (autorID ) REFERENCES autori(autorID)
+  ON UPDATE CASCADE ON DELETE NO ACTION
+) ENGINE = INNODB;
+
+CREATE TABLE evidencioniKarton(
+   evidencioniKarton_id int(10) primary key NOT NULL AUTO_INCREMENT,
+  `datumIzdavanja` DATE,
+  `datumVracanja` DATE,
+  `clan_id` int,
+   knjiga_id int,
+	bibliotekar_id int,
+   FOREIGN KEY(`clan_id`) REFERENCES clanovi(`clan_id`) 
+   ON UPDATE CASCADE ON DELETE NO ACTION,
+   FOREIGN KEY(`knjiga_id`) REFERENCES knjige(`knjiga_id`) 
+   ON UPDATE CASCADE ON DELETE NO ACTION,
+   FOREIGN KEY(bibliotekar_id) REFERENCES bibliotekar (bibliotekar_id) 
+   ON UPDATE CASCADE ON DELETE NO ACTION
+
+) ENGINE = INNODB;
+
+CREATE TABLE pozajmnoOdeljenje(
+  pozajmnoOdeljenje_id int primary key NOT NULL AUTO_INCREMENT,
+  aktuelnosti varchar(45),
+  zanr varchar(45),
+    evidencioniKarton_id int (10),
+  FOREIGN KEY(evidencioniKarton_id) REFERENCES evidencioniKarton (evidencioniKarton_id) 
+  ON UPDATE CASCADE ON DELETE NO ACTION
+) ENGINE = INNODB;
+
+CREATE TABLE decijeOdeljenje(
+  decijeOdeljenje_id int primary key NOT NULL AUTO_INCREMENT,
+  uzrast int
+) ENGINE = INNODB;
+
+ALTER TABLE decijeOdeljenje
+ADD FOREIGN KEY (decijeOdeljenje_id) REFERENCES pozajmnoOdeljenje (pozajmnoOdeljenje_id)
+
+CREATE TABLE naucnoOdeljenje(
+  naucnoOdeljenje_id int primary key NOT NULL AUTO_INCREMENT,
+  oblast varchar(100)
+) ENGINE = INNODB;
+
+  ALTER TABLE naucnoOdeljenje
+  ADD FOREIGN KEY (naucnoOdeljenje_id) REFERENCES pozajmnoOdeljenje (pozajmnoOdeljenje_id)
+

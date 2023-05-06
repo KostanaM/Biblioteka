@@ -1,0 +1,44 @@
+
+INSERT INTO `autori`(`imeAutora`, `prezimeAutora`) VALUES 
+('Milan','Gocic'), 
+('Laslo','Kraus')
+
+INSERT INTO `biblioteka`(`naziv`, `ulica`, `broj`, `mesto`, `telefon`) VALUES 
+('Gradska biblioteka Subotica','Cara Dusana','2','Subotica','024 553 115'),
+('Gradska biblioteka Novi Sad','Dunavska','1','Novi Sad','021 525 540')
+
+INSERT INTO `bibliotekar`(`ime`, `prezime`, `sifra`, `ulica`, `broj`, `mesto`, `JBMG`, `telefon`) VALUES 
+('Marko','Markovic','1111','Suboticka','2','Novi Sad','1234567891011','021 587 456'),
+('Petar','Petrovi','2222','Jasenovacka','7','Subotica','1110987654321','024 364 741')
+
+INSERT INTO `clanovi`(`ime`, `prezime`, `datumRodjenja`, `telefon`, `ulica`, `broj`, `mesto`, `brojClanske`) VALUES
+('Ivana','Ivanovic','2000-04-13','024 541 254','Ravnogorska','2','Subotica','543'), 
+('Miso','Miskovic','2003-06-05','021 123 987','Dusanova','41/H','Novi Sad','423')
+
+INSERT INTO `bibliotekaclan`(`biblioteka_id`, `clan_id`) VALUES
+('1','2'),
+('2','1')
+
+INSERT INTO `bibliotekabibliotekar`(`biblioteka_id`, `bibliotekar_id`) VALUES 
+('1','2'),
+('2','1')
+
+INSERT INTO `knjige`(`naziv`, `jezik`, `izdavac`, `biblioteka_id`) VALUES 
+('OOP - Java','srpski','Vizantija','1'),
+('Reseni zadaci - Java','srpski','Odiseja','1')
+
+INSERT INTO `knjigaautori`(`knjiga_id`, `autorID`) VALUES 
+('1','1'),('2','2')
+
+INSERT INTO `evidencionikarton`(`datumIzdavanja`, `datumVracanja`, `clan_id`, `knjiga_id`, `bibliotekar_id`) VALUES 
+('2023-04-25','2023-04-30','1','1','2'), 
+('2023-04-10','2023-05-04','2','2','1')
+
+INSERT INTO `pozajmnoodeljenje`(`pozajmnoOdeljenje_id`, `aktuelnosti`, `zanr`, `evidencioniKarton_id`) VALUES 
+(1, 'NP','NP','1')
+
+INSERT INTO `decijeodeljenje`(`decijeOdeljenje_id`, `uzrast`) VALUES
+(1,10)
+
+INSERT INTO `naucnoodeljenje`(`naucnoOdeljenje_id`, `oblast`) VALUES 
+(1,'Java programiranje')
